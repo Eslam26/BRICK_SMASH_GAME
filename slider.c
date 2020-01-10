@@ -21,7 +21,7 @@
  ----------------------------------------------------------------------------------------------------*/
 void slideMoverRight(uint8 * const originPointSlider_Ptr) {
 	uint8 state, counterTemp, n, counter;
-	cli();
+	//cli();
 	*originPointSlider_Ptr = *originPointSlider_Ptr + 4;
 	if (*originPointSlider_Ptr + 8 >= 128) {
 		*originPointSlider_Ptr = *originPointSlider_Ptr - 4;
@@ -53,9 +53,10 @@ void slideMoverRight(uint8 * const originPointSlider_Ptr) {
 				GLCD_sendData(state & ~(0x80));
 			}
 			counterTemp++;
+			sei();
+					cli();
 		}
-		sei();
-		cli();
+
 		for (; counterTemp <= counter + 8; counterTemp++) {
 			if (counterTemp < 64) {
 				GLCD_CTRL_PORT |= (1 << CS1); /* Select Left half of display */
@@ -80,9 +81,11 @@ void slideMoverRight(uint8 * const originPointSlider_Ptr) {
 				GLCD_sendCommand(0xB8 + 7);
 				GLCD_sendData((state & ~(0x80)) | 0x80);
 			}
+			sei();
+					cli();
 		}
 	}
-	sei();
+	//sei();
 }
 
 /*----------------------------------------------------------------------------------------------------
@@ -97,7 +100,7 @@ void slideMoverRight(uint8 * const originPointSlider_Ptr) {
 
 void slideMoverLeft(uint8 * const originPointSlider_Ptr) {
 	uint8 state, counterTemp,n,counter;
-	cli();
+	//cli();
 	*originPointSlider_Ptr = *originPointSlider_Ptr - 4;
 	if (*originPointSlider_Ptr >= 128) {
 		*originPointSlider_Ptr = *originPointSlider_Ptr + 4;
@@ -128,9 +131,10 @@ void slideMoverLeft(uint8 * const originPointSlider_Ptr) {
 				GLCD_sendCommand(0xB8 + 7);
 				GLCD_sendData((state & ~(0x80)) | 0x80);
 			}
+			sei();
+			cli();
 		}
-		sei();
-		cli();
+
 		for (counterTemp = counter + 8; counterTemp <= counter + 8 + 4;
 				counterTemp++) {
 			if (counterTemp < 64) {
@@ -156,9 +160,11 @@ void slideMoverLeft(uint8 * const originPointSlider_Ptr) {
 				GLCD_sendCommand(0xB8 + 7);
 				GLCD_sendData(state & ~(0x80));
 			}
+			sei();
+			cli();
 		}
 	}
-	sei();
+	//sei();
 
 }
 
