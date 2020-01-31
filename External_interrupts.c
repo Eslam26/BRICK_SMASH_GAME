@@ -49,27 +49,35 @@ ISR(INT2_vect)
  ----------------------------------------------------------------------------------------------------*/
 void ExternalInterrupts_init(
 		E_Interrupts_configType * E_Interrupts_configType_Ptr) {
-	if (E_Interrupts_configType_Ptr->INT0_configType == 4) {
+	if (E_Interrupts_configType_Ptr->INT0_configType == OFF_INT0) {
 		GICR &= ~(1<<INT0);
 	} else {
+		DDRD &=~(1<<PD2);
+		PORTD |= (1<<PD2);
 		GICR |= (1<<INT0);
 		MCUCR = (MCUCR & 0b11111100) | ((E_Interrupts_configType_Ptr->INT0_configType & 0b00000011)<<(ISC00));
 
 	}
-	if (E_Interrupts_configType_Ptr->INT0_configType == 4) {
+	if (E_Interrupts_configType_Ptr->INT1_configType == OFF_INT1) {
 		GICR &= ~(1<<INT1);
 
 	} else {
+		DDRD &=~(1<<PD3);
+		PORTD |= (1<<PD3);
 		GICR |= (1<<INT1);
 		MCUCR = (MCUCR & 0b11111100) | ((E_Interrupts_configType_Ptr->INT1_configType & 0b00000011)<<(ISC10));
 
 	}
 
-	if (E_Interrupts_configType_Ptr->INT0_configType == 2) {
+	if (E_Interrupts_configType_Ptr->INT2_configType == OFF_INT2) {
 		GICR &= ~(1<<INT2);
 	} else {
-		GICR |= (1<<INT2);
+		SREG   &= ~(1<<7);      // Disable interrupts by clearing I-bit
+		DDRB   &= (~(1<<PB2));   // Configure INT2/PB2 as input pin
+		PORTB  |= (1<<PB2);
+		GICR   |= (1<<INT2);	// Enable external interrupt pin INT2
 		MCUCSR = (MCUCSR & 0b10111111) | ((E_Interrupts_configType_Ptr->INT2_configType & 0b00000001)<<(ISC2));
+		SREG   |= (1<<7);       // Enable interrupts by setting I-bit
 	}
 
 }

@@ -87,8 +87,6 @@ int main() {
 	uint8 directions = UPPER_RIGHT;
 	Timer1_configType configType = { CTC_OCR1A, F_CPU_64, ZERO };
 	Timer1_compare_1A configTypecompare = { ZERO, compareMode_1A, TIMER_COMPARE_VALUE };
-	E_Interrupts_configType interruptsConfig = { FALLING_EDGE_INT0,
-			FALLING_EDGE_INT1, OFF_INT2 };
 	DATA_PORT_SEVEN_SEGMENTS_DIRECTION |= 0xF0;
 	DATA_PORT_SEVEN_SEGMENTS = (DATA_PORT_SEVEN_SEGMENTS & 0x0F)
 			| ((ZERO & 0x0F) << 4);

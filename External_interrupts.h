@@ -1,5 +1,5 @@
 /*******************************************************************************************************
- *  [FILE NAME]   :      <External_interrupts.h>                                                                       *
+ *  [FILE NAME]   :      <External_interrupts.h>                                                       *
  *  [AUTHOR]      :      <Eslam EL-Naggar>                                                             *
  *  [DATE CREATED]:      <Dec 4, 2019>                                                                 *
  *  [Description} :      <header file for external interrupts Driver>                                  *
@@ -9,7 +9,12 @@
 #define EXTERNAL_INTERRUPTS_H_
 
 /*----------------------------------------INCLUDES-----------------------------------*/
-#include <avr/interrupt.h>
+#include "micro_config.h"
+#include "std_types.h"
+#include "common_macros.h"
+
+/*----------------------------------------EXTERNS------------------------------------*/
+
 
 /*-----------------------------------------ENUMS-------------------------------------*/
 
@@ -34,6 +39,7 @@ typedef struct {
 	E_Interrupts_INT2_configType INT2_configType;
 }E_Interrupts_configType;
 
+
 /*-----------------------------------FUNCTIONS DECLARATIONS----------------------------*/
 
 void ExternalInterrupts_init(E_Interrupts_configType *);
@@ -41,5 +47,8 @@ void ExternalInterrupts_Deinit(void);
 void ExternalInterrupts_INT0_setCallBack(void (*INT0_setCallBack_Ptr)(void));
 void ExternalInterrupts_INT1_setCallBack(void (*INT0_setCallBack_Ptr)(void));
 void ExternalInterrupts_INT2_setCallBack(void (*INT0_setCallBack_Ptr)(void));
+
+/*------------------------------------EXTERNAL VARIABLES------------------------------*/
+extern E_Interrupts_configType interruptsConfig;
 
 #endif /* EXTERNAL_INTERRUPTS_H_ */
